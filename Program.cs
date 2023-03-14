@@ -1,16 +1,21 @@
 ﻿namespace InteractiveSetEditor
 {
+    public static class IEnumerableExtension
+    {
+        public static void PrintData<T>(this IEnumerable<T> data, int highlightedIndex = 0, ConsoleColor highlightedColor = ConsoleColor.Green)
+        {
+            for (int i = 0; i < data.Count(); i++)
+            {
+                Console.ForegroundColor = (i == highlightedIndex) ? highlightedColor : ConsoleColor.Gray;
+                Console.Write(data.ElementAt(i) + "  ");
+            }
+
+            Console.ResetColor();
+        }
+    }
+
     public static class InteractiveSetEditor<T>
     {
-        private static void PrintItems(List<T> items, int highlightedIndex)
-        {
-            for (int i = 0; i < items.Count; i++)
-            {
-                Console.ForegroundColor = (i == highlightedIndex) ? ConsoleColor.Green : ConsoleColor.Red;
-                Console.Write(items[i] + "  ");
-            }
-        }
-
         private static void ShowManual()
         {
             Console.WriteLine("Press → and ← to move pointer");
@@ -56,7 +61,7 @@
             do
             {
                 Console.Clear();
-                PrintItems(items, index);
+                items.PrintData(index);
 
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.RightArrow)
