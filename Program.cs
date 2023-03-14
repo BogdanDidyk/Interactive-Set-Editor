@@ -14,21 +14,9 @@
         }
     }
 
-    public static class InteractiveSetEditor<T>
+    public static class ConsoleReader
     {
-        private static void ShowManual()
-        {
-            Console.WriteLine("Press → and ← to move pointer");
-            Console.WriteLine("Press SPACE to change current value");
-            Console.WriteLine("Press TAB to add new value");
-            Console.WriteLine("Press DEL or BACKSPACE to clear current value");
-            Console.WriteLine("Press ENTER to complete edition");
-            Console.WriteLine();
-            Console.WriteLine("(Press any key to start)");
-            Console.ReadKey();
-        }
-
-        private static T ReadNewValueFromConsole()
+        public static T ReadValue<T>()
         {
             Console.Clear();
             Console.ResetColor();
@@ -48,6 +36,21 @@
             Console.CursorVisible = false;
 
             return value;
+        }
+    }
+
+    public static class InteractiveSetEditor<T>
+    {
+        private static void ShowManual()
+        {
+            Console.WriteLine("Press → and ← to move pointer");
+            Console.WriteLine("Press SPACE to change current value");
+            Console.WriteLine("Press TAB to add new value");
+            Console.WriteLine("Press DEL or BACKSPACE to clear current value");
+            Console.WriteLine("Press ENTER to complete edition");
+            Console.WriteLine();
+            Console.WriteLine("(Press any key to start)");
+            Console.ReadKey();
         }
 
         public static void EditItems(List<T> items)
@@ -74,11 +77,11 @@
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
-                    items[index] = ReadNewValueFromConsole();
+                    items[index] = ConsoleReader.ReadValue<T>();
                 }
                 else if (key == ConsoleKey.Tab)
                 {
-                    items.Add(ReadNewValueFromConsole());
+                    items.Add(ConsoleReader.ReadValue<T>());
                 }
                 else if ((key == ConsoleKey.Delete || key == ConsoleKey.Backspace) && items.Count != 1)
                 {
