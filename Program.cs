@@ -53,7 +53,7 @@
             Console.ReadKey();
         }
 
-        public static void EditItems(List<T> items)
+        public static void EditItems(List<T> set)
         {
             ShowManual();
 
@@ -64,7 +64,7 @@
             do
             {
                 Console.Clear();
-                items.PrintData(index);
+                set.PrintData(index);
 
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.RightArrow)
@@ -77,18 +77,18 @@
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
-                    items[index] = ConsoleReader.ReadValue<T>();
+                    set[index] = ConsoleReader.ReadValue<T>();
                 }
                 else if (key == ConsoleKey.Tab)
                 {
-                    items.Add(ConsoleReader.ReadValue<T>());
+                    set.Add(ConsoleReader.ReadValue<T>());
                 }
-                else if ((key == ConsoleKey.Delete || key == ConsoleKey.Backspace) && items.Count != 1)
+                else if ((key == ConsoleKey.Delete || key == ConsoleKey.Backspace) && set.Count != 1)
                 {
-                    items.RemoveAt(index);
+                    set.RemoveAt(index);
                 }
 
-                index = (items.Count + index) % items.Count;
+                index = (set.Count + index) % set.Count;
             }
             while (key != ConsoleKey.Enter);
 
@@ -101,13 +101,13 @@
     {
         public static void Main(string[] args)
         {
-            List<int> list = new List<int>() { 26, 10, -13, 17, 3 };
-            List<int> copy = new List<int>(list);
+            List<int> set = new List<int>() { 26, 10, -13, 17, 3 };
+            List<int> copy = new List<int>(set);
 
-            InteractiveSetEditor<int>.EditItems(list);
+            InteractiveSetEditor<int>.EditItems(set);
 
             Console.WriteLine($"Original: {string.Join(", ", copy)}");
-            Console.WriteLine($"Edited: {string.Join(", ", list)}");
+            Console.WriteLine($"Edited: {string.Join(", ", set)}");
 
             Console.Read();
         }
